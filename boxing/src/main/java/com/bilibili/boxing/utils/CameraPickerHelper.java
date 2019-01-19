@@ -220,48 +220,8 @@ public class CameraPickerHelper {
         return true;
     }
 
-    private boolean rotateSourceFile(File file) throws IOException {
-        if (file == null || !file.exists()) {
-            return false;
-        }
-        FileOutputStream outputStream = null;
-        Bitmap bitmap = null;
-        Bitmap outBitmap = null;
-        try {
-            int degree = BoxingExifHelper.getRotateDegree(file.getAbsolutePath());
-            if (degree == 0) {
-                return true;
-            }
-            int quality = file.length() >= MAX_CAMER_PHOTO_SIZE ? 90 : 100;
-            Matrix matrix = new Matrix();
-            matrix.postRotate(degree);
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = false;
-            bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
-            outBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, false);
-            outputStream = new FileOutputStream(file);
-            outBitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
-            outputStream.flush();
-            return true;
-        } finally {
-            if (outputStream != null) {
-                try {
-                    outputStream.close();
-                } catch (IOException e) {
-                    BoxingLog.d("IOException when output stream closing!");
-                }
-            }
-            if (bitmap != null) {
-                bitmap.recycle();
-            }
-            if (outBitmap != null) {
-                outBitmap.recycle();
-            }
-        }
-    }
-
     private boolean rotateImage(int resultCode) throws IOException {
-        return resultCode == Activity.RESULT_OK && rotateSourceFile(mOutputFile);
+        return resultCode == Activity.RESULT_OK && BoxingImageUtil.rotateSourceFile(mOutputFile);
     }
 
     public void release() {

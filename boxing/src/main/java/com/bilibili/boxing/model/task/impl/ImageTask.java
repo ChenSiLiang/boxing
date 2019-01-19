@@ -17,6 +17,19 @@
 
 package com.bilibili.boxing.model.task.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import com.bilibili.boxing.model.BoxingManager;
+import com.bilibili.boxing.model.callback.IMediaTaskCallback;
+import com.bilibili.boxing.model.config.BoxingConfig;
+import com.bilibili.boxing.model.entity.impl.ImageMedia;
+import com.bilibili.boxing.model.task.IMediaTask;
+import com.bilibili.boxing.utils.BoxingExecutor;
+import com.bilibili.boxing.utils.BoxingImageUtil;
+import com.bilibili.boxing.utils.BoxingLog;
+
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.os.Build;
@@ -25,18 +38,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
-
-import com.bilibili.boxing.model.BoxingManager;
-import com.bilibili.boxing.model.callback.IMediaTaskCallback;
-import com.bilibili.boxing.model.config.BoxingConfig;
-import com.bilibili.boxing.model.entity.impl.ImageMedia;
-import com.bilibili.boxing.model.task.IMediaTask;
-import com.bilibili.boxing.utils.BoxingExecutor;
-import com.bilibili.boxing.utils.BoxingLog;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * A Task to load photos.
@@ -135,14 +136,25 @@ public class ImageTask implements IMediaTask<ImageMedia> {
                     String id = cursor.getString(cursor.getColumnIndex(Images.Media._ID));
                     String size = cursor.getString(cursor.getColumnIndex(Images.Media.SIZE));
                     String mimeType = cursor.getString(cursor.getColumnIndex(Images.Media.MIME_TYPE));
-                    int width = 0;
-                    int height = 0;
+                    int[] sizes = new int[2];
+                    if ("0".equals(size)) {
+                        size = String.valueOf(BoxingImageUtil.getSize(picPath, sizes, true));
+                    } else {
+                        BoxingImageUtil.getSize(picPath, sizes);
+                    }
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        width = cursor.getInt(cursor.getColumnIndex(Images.Media.WIDTH));
-                        height = cursor.getInt(cursor.getColumnIndex(Images.Media.HEIGHT));
+                        if (sizes[0] <= 0) {
+                            sizes[0] = cursor.getInt(cursor.getColumnIndex(Images.Media.WIDTH));
+                        }
+                        if (sizes[1] <= 0) {
+                            sizes[1] = cursor.getInt(cursor.getColumnIndex(Images.Media.HEIGHT));
+                        }
+                    }
+                    if ("image/gif".equals(mimeType) && BoxingImageUtil.isGif(picPath)) {
+                        mimeType = "image/gif";
                     }
                     ImageMedia imageItem = new ImageMedia.Builder(id, picPath).setThumbnailPath(mThumbnailMap.get(id))
-                            .setSize(size).setMimeType(mimeType).setHeight(height).setWidth(width).build();
+                            .setSize(size).setMimeType(mimeType).setHeight(sizes[1]).setWidth(sizes[0]).build();
                     if (!result.contains(imageItem)) {
                         result.add(imageItem);
                     }
