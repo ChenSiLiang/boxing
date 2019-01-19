@@ -56,8 +56,11 @@ public class ImageTask implements IMediaTask<ImageMedia> {
     private static final String IMAGE_PNG = "image/png";
     private static final String IMAGE_JPG = "image/jpg";
     private static final String IMAGE_GIF = "image/gif";
-    private static final String[] SELECTION_ARGS_IMAGE_MIME_TYPE = {IMAGE_JPEG, IMAGE_PNG, IMAGE_JPG, IMAGE_GIF};
-    private static final String[] SELECTION_ARGS_IMAGE_MIME_TYPE_WITHOUT_GIF = {IMAGE_JPEG, IMAGE_PNG, IMAGE_JPG};
+    private static final String IMAGE_WEBP = "image/webp";
+    private static final String[] SELECTION_ARGS_IMAGE_MIME_TYPE =
+            {IMAGE_JPEG, IMAGE_PNG, IMAGE_JPG, IMAGE_WEBP, IMAGE_GIF};
+    private static final String[] SELECTION_ARGS_IMAGE_MIME_TYPE_WITHOUT_GIF =
+            {IMAGE_JPEG, IMAGE_PNG, IMAGE_WEBP, IMAGE_JPG};
 
     private static final String DESC = " desc";
 
