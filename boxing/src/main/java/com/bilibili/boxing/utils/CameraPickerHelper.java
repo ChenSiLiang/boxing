@@ -92,10 +92,13 @@ public class CameraPickerHelper {
      *
      * @param activity      not null if fragment is null.
      * @param fragment      not null if activity is null.
-     * @param subFolderPath a folder in external DCIM,must start with "/".
+     * @param path a folder in external DCIM,must start with "/".
      */
-    public void startCamera(final Activity activity, final Fragment fragment, final String subFolderPath) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || !takePhotoSecure(activity, fragment, subFolderPath)) {
+    public void startCamera(final Activity activity, final Fragment fragment, @Nullable String path) {
+        if (!BoxingFileHelper.isDirValid(path)) {
+            path = BoxingFileHelper.getExternalDCIM();
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || !takePhotoSecure(activity, fragment, path)) {
             FutureTask<Boolean> task = BoxingExecutor.getInstance().runWorker(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
@@ -112,7 +115,7 @@ public class CameraPickerHelper {
             });
             try {
                 if (task != null && task.get()) {
-                    startCameraIntent(activity, fragment, subFolderPath, MediaStore.ACTION_IMAGE_CAPTURE, REQ_CODE_CAMERA);
+                    startCameraIntent(activity, fragment, path, MediaStore.ACTION_IMAGE_CAPTURE, REQ_CODE_CAMERA);
                 } else {
                     callbackError();
                 }
@@ -123,10 +126,10 @@ public class CameraPickerHelper {
         }
     }
 
-    private boolean takePhotoSecure(Activity activity, Fragment fragment, String subDir) {
+    private boolean takePhotoSecure(Activity activity, Fragment fragment, String path) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             try {
-                startCameraIntent(activity, fragment, subDir, MediaStore.ACTION_IMAGE_CAPTURE, REQ_CODE_CAMERA);
+                startCameraIntent(activity, fragment, path, MediaStore.ACTION_IMAGE_CAPTURE, REQ_CODE_CAMERA);
                 return true;
             } catch (ActivityNotFoundException ignore) {
                 return false;
@@ -155,12 +158,11 @@ public class CameraPickerHelper {
         }
     }
 
-    private void startCameraIntent(final Activity activity, final Fragment fragment, String subFolder,
+    private void startCameraIntent(final Activity activity, final Fragment fragment, String folderPath,
                                    final String action, final int requestCode) {
-        final String cameraOutDir = BoxingFileHelper.getExternalDCIM(subFolder);
         try {
-            if (BoxingFileHelper.createFile(cameraOutDir)) {
-                mOutputFile = new File(cameraOutDir, System.currentTimeMillis() + ".jpg");
+            if (BoxingFileHelper.createFile(folderPath)) {
+                mOutputFile = new File(folderPath, System.currentTimeMillis() + ".jpg");
                 mSourceFilePath = mOutputFile.getPath();
                 Intent intent = new Intent(action);
                 Uri uri = getFileUri(activity.getApplicationContext(), mOutputFile);
@@ -173,7 +175,7 @@ public class CameraPickerHelper {
 
             }
         } catch (ExecutionException | InterruptedException e) {
-            BoxingLog.d("create file" + cameraOutDir + " error.");
+            BoxingLog.d("create file" + folderPath + " error.");
         }
 
     }

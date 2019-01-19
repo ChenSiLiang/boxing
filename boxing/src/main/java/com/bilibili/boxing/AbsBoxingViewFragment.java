@@ -430,15 +430,16 @@ public abstract class AbsBoxingViewFragment extends Fragment implements PickerCo
      *
      * @param activity      the caller activity.
      * @param fragment      the caller fragment, may be null.
-     * @param subFolderPath the folder name in "DCIM/bili/boxing/"
+     * @param path the folder full path
      */
-    public final void startCamera(Activity activity, Fragment fragment, String subFolderPath) {
+    public final void startCamera(Activity activity, Fragment fragment, @Nullable String path) {
         try {
-            if (!BoxingBuilderConfig.TESTING && ContextCompat.checkSelfPermission(getActivity(), CAMERA_PERMISSIONS[0]) != PERMISSION_GRANTED) {
+            if (!BoxingBuilderConfig.TESTING && ContextCompat.checkSelfPermission(activity, CAMERA_PERMISSIONS[0]) !=
+                    PERMISSION_GRANTED) {
                 requestPermissions(CAMERA_PERMISSIONS, REQUEST_CODE_PERMISSION);
             } else {
                 if (!BoxingManager.getInstance().getBoxingConfig().isVideoMode()) {
-                    mCameraPicker.startCamera(activity, fragment, subFolderPath);
+                    mCameraPicker.startCamera(activity, fragment, path);
                 }
             }
         } catch (IllegalArgumentException | IllegalStateException e) {

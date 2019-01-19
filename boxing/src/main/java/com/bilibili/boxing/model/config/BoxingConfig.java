@@ -20,6 +20,7 @@ package com.bilibili.boxing.model.config;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 
 /**
  * The pick config.<br/>
@@ -37,6 +38,8 @@ public class BoxingConfig implements Parcelable {
     private Mode mMode = Mode.SINGLE_IMG;
     private ViewMode mViewMode = ViewMode.PREVIEW;
     private BoxingCropOption mCropOption;
+    @NonNull
+    private String cameraDir;
 
     private int mMediaPlaceHolderRes;
     private int mMediaCheckedRes;
@@ -144,6 +147,10 @@ public class BoxingConfig implements Parcelable {
         return mVideoDurationRes;
     }
 
+    public String getCameraDir() {
+        return cameraDir;
+    }
+
     public boolean isNeedLoading() {
         return mViewMode == ViewMode.EDIT;
     }
@@ -190,6 +197,15 @@ public class BoxingConfig implements Parcelable {
      */
     public BoxingConfig needPaging(boolean needPaging) {
         this.mNeedPaging = needPaging;
+        return this;
+    }
+
+    /**
+     * Set a path for camera to save pictures.
+     * Please make sure the folder is a directory and already exist.
+     */
+    public BoxingConfig withCameraFolderPath(@NonNull String path) {
+        this.cameraDir = path;
         return this;
     }
 
@@ -273,6 +289,7 @@ public class BoxingConfig implements Parcelable {
         dest.writeInt(this.mMode == null ? -1 : this.mMode.ordinal());
         dest.writeInt(this.mViewMode == null ? -1 : this.mViewMode.ordinal());
         dest.writeParcelable(this.mCropOption, flags);
+        dest.writeString(this.cameraDir);
         dest.writeInt(this.mMediaPlaceHolderRes);
         dest.writeInt(this.mMediaCheckedRes);
         dest.writeInt(this.mMediaUnCheckedRes);
@@ -291,6 +308,7 @@ public class BoxingConfig implements Parcelable {
         int tmpMViewMode = in.readInt();
         this.mViewMode = tmpMViewMode == -1 ? null : ViewMode.values()[tmpMViewMode];
         this.mCropOption = in.readParcelable(BoxingCropOption.class.getClassLoader());
+        this.cameraDir = in.readString();
         this.mMediaPlaceHolderRes = in.readInt();
         this.mMediaCheckedRes = in.readInt();
         this.mMediaUnCheckedRes = in.readInt();

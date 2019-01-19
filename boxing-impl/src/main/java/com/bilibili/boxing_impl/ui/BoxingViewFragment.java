@@ -122,7 +122,7 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
         if (permissions[0].equals(STORAGE_PERMISSIONS[0])) {
             startLoading();
         } else if (permissions[0].equals(CAMERA_PERMISSIONS[0])) {
-            startCamera(getActivity(), this, null);
+            startCamera(getActivity(), this, BoxingManager.getInstance().getBoxingConfig().getCameraDir());
         }
     }
 
@@ -459,7 +459,8 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
         public void onClick(View v) {
             if (!mIsCamera) {
                 mIsCamera = true;
-                startCamera(getActivity(), BoxingViewFragment.this, BoxingFileHelper.DEFAULT_SUB_DIR);
+                startCamera(getActivity(), BoxingViewFragment.this,
+                        BoxingManager.getInstance().getBoxingConfig().getCameraDir());
             }
         }
     }

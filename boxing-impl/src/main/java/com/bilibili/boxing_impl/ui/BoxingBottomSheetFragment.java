@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.bilibili.boxing.AbsBoxingViewFragment;
 import com.bilibili.boxing.model.BoxingManager;
+import com.bilibili.boxing.model.config.BoxingConfig;
 import com.bilibili.boxing.model.entity.BaseMedia;
 import com.bilibili.boxing.presenter.PickerContract;
 import com.bilibili.boxing.utils.BoxingFileHelper;
@@ -224,7 +225,8 @@ public class BoxingBottomSheetFragment extends AbsBoxingViewFragment implements 
         public void onClick(View v) {
             if (!mIsCamera) {
                 mIsCamera = true;
-                startCamera(getActivity(), BoxingBottomSheetFragment.this, BoxingFileHelper.DEFAULT_SUB_DIR);
+                final String cameraOutDir = BoxingManager.getInstance().getBoxingConfig().getCameraDir();
+                startCamera(getActivity(), BoxingBottomSheetFragment.this, cameraOutDir);
             }
         }
     }

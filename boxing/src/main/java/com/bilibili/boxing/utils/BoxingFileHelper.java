@@ -32,7 +32,7 @@ import java.util.concurrent.ExecutionException;
  * @author ChenSL
  */
 public class BoxingFileHelper {
-    public static final String DEFAULT_SUB_DIR = "/bili/boxing";
+    private static final String DEFAULT_SUB_DIR = "/bili/boxing";
 
     public static boolean createFile(String path) throws ExecutionException, InterruptedException {
         if (TextUtils.isEmpty(path)) {
@@ -67,21 +67,20 @@ public class BoxingFileHelper {
 
     @Nullable
     public static String getBoxingPathInDCIM() {
-        return getExternalDCIM(null);
+        return getExternalDCIM();
     }
 
+    /**
+     * @return ..../DCIM/bili/boxing or null.
+     */
     @Nullable
-    public static String getExternalDCIM(String subDir) {
+    public static String getExternalDCIM() {
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
             if (file == null) {
                 return null;
             }
-            String dir = "/bili/boxing";
-            if (!TextUtils.isEmpty(subDir)) {
-                dir = subDir;
-            }
-            String result = file.getAbsolutePath() + dir;
+            String result = file.getAbsolutePath() + DEFAULT_SUB_DIR;
             BoxingLog.d("external DCIM is: " + result);
             return result;
         }
@@ -99,5 +98,13 @@ public class BoxingFileHelper {
 
     static boolean isFileValid(File file) {
         return file != null && file.exists() && file.isFile() && file.length() > 0 && file.canRead();
+    }
+
+    public static boolean isDirValid(String dirPath) {
+        if (!TextUtils.isEmpty(dirPath)) {
+            File dir = new File(dirPath);
+            return dir.exists() && dir.isDirectory();
+        }
+        return false;
     }
 }
