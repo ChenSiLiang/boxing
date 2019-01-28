@@ -1,11 +1,15 @@
 ## boxing
 ---
-Android multi-media selector based on MVP mode.[中文文档](README_CN.md)  [![Build Status](https://travis-ci.org/Bilibili/boxing.svg?branch=master)](https://travis-ci.org/Bilibili/boxing)
+Android multi-media selector based on MVP mode.[中文文档](README_CN.md) 
 
-#### boxing Inside: 
-[![bili](screenshot/bili.webp)](https://play.google.com/store/apps/details?id=tv.danmaku.bili)
+### About Version 2.0
+
+- Return accurate mime-type and size of pictures
+- Support user-defined camera directory
+- Support webp
 
 ### Feature
+
 ---
 - Custom UI
 - Multiple/single selection, preview and crop function
@@ -13,47 +17,24 @@ Android multi-media selector based on MVP mode.[中文文档](README_CN.md)  [![
 - Video selection
 - Image compression
 - Gif encode(checkout feature/gif-encode to have fun), see [Bilibili/BurstLinker](https://github.com/Bilibili/BurstLinker)
+- UI version can't work with [PhotoView](https://github.com/chrisbanes/PhotoView) 
 
 ### Download
 ---
 Core version: only contain the core function.
 
-UI version: contain UI implements base on core version.
-
-- Maven
-
-Core version
-
-```xml
-<dependency>                       
-  	<groupId>com.bilibili</groupId>  
-  	<artifactId>boxing</artifactId>  
-  	<version>1.0.4</version>
-  	<type>pom</type>                
-</dependency>                      		
-```
-
-UI version
-
-```xml
-<dependency>                          
-  	<groupId>com.bilibili</groupId>     
-  	<artifactId>boxing-impl</artifactId>
-  	<version>1.0.4</version>
-  	<type>pom</type>                    
-</dependency>                         
-```
+UI version: contain UI implements base on core version.                  		​                      
 
 - Gradle
 
 Core version              
 ```java
-compile 'com.bilibili:boxing:1.0.4'
+// TODO
 ```
 
 UI version
 ```java
-compile 'com.bilibili:boxing-impl:1.0.4'
+// TODO
 ```
 
 ### Preview
@@ -129,12 +110,19 @@ Use camera in Android N, add this in AndroidManifest.xml
 Stay hungry, stay foolish.
 checkout `feature/kotlin` for fun.
 
-### TODO
-Support different config at the same moment.
-
 ### License
-----
-Copyright 2017 Bilibili
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
-[http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+```
+Copyright 2019 CHEN Siliang
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License
+```

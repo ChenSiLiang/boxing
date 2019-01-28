@@ -123,16 +123,16 @@ public class PickerUtilTest {
     @Test
     public void testGetExternalDCIM() {
         PowerMockito.mockStatic(Environment.class);
-        String file = BoxingFileHelper.getExternalDCIM(BoxingFileHelper.DEFAULT_SUB_DIR);
+        String file = BoxingFileHelper.getExternalDCIM();
         assertNull(file);
 
         PowerMockito.when(Environment.getExternalStorageState()).thenReturn(Environment.MEDIA_MOUNTED);
-        file = BoxingFileHelper.getExternalDCIM(BoxingFileHelper.DEFAULT_SUB_DIR);
+        file = BoxingFileHelper.getExternalDCIM();
         assertNull(file);
 
         PowerMockito.when(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM))
                 .thenReturn(new File("DCIM"));
-        file = BoxingFileHelper.getExternalDCIM(BoxingFileHelper.DEFAULT_SUB_DIR);
+        file = BoxingFileHelper.getExternalDCIM();
         assertNotNull(file);
     }
 

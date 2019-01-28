@@ -1,11 +1,14 @@
 ## boxing
 ---
-基于MVP模式的Android多媒体选择器。[![Build Status](https://travis-ci.org/Bilibili/boxing.svg?branch=master)](https://travis-ci.org/Bilibili/boxing)
+基于MVP模式的Android多媒体选择器。
 
-#### boxing Inside: 
-[![bili](screenshot/bili.webp)](https://play.google.com/store/apps/details?id=tv.danmaku.bili)
+### 关于Version 2.0
+- 返回可靠的图片类型和大小（根据手机性能和图片会有20~500ms延迟）
+- 支持自定义拍照路径
+- 支持webp图片
 
 ### 特性
+
 ---
 - 支持自定义UI
 - 支持多/单图片选择和预览，单图裁剪功能
@@ -13,40 +16,23 @@
 - 支持视频选择功能
 - 提供图片压缩
 - 多图生成gif（checkout feature/gif-encode), 见 [Bilibili/BurstLinker](https://github.com/Bilibili/BurstLinker)
+- Impl版本不能和[PhotoView](https://github.com/chrisbanes/PhotoView)一起使用
 
 ### Download                                                                  
 ---
 核心版本：只包含核心功能。
 实现版本：在核心功能之上添加了实现界面。                                                                                       
-- Maven 
-  ​                                                  
-  核心版本                                                                                                                                            
-```xml
-<dependency>                                                      
-  	<groupId>com.bilibili</groupId>                                    
-  	<artifactId>boxing</artifactId>                                    
-  	<version>1.0.4</version>
-  	<type>pom</type>                                                
-</dependency> 
-```
-实现版本                                                                   
-```xml
-<dependency>                                                          
-  	<groupId>com.bilibili</groupId>                                    
-  	<artifactId>boxing-impl</artifactId>                              
-  	<version>1.0.4</version>
-  	<type>pom</type>                                                  
-</dependency>                                                      
-```
-- Gradle   
-  ​                                                    
-  核心版本                                                                 
+​                                                  
+Gradle
+​                                                    
+核心版本                                                                 
+
 ```java                                                                         
-compile 'com.bilibili:boxing:1.0.4'
+// TODO
 ```
 实现版本                                                                   
 ```java                                                                        
-compile 'com.bilibili:boxing-impl:1.0.4'
+// TODO
 ```
 
 ### 预览图
@@ -123,12 +109,19 @@ Android N 版本使用相机必须在AndroidManifest.xml中添加
 ### Kotlin
 checkout `feature/kotlin` 来玩一玩吧。
 
-### TODO
-支持同时存在多个不同的config。
-
 ### License
-----
-Copyright 2016 Bilibili
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
-[http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+```
+Copyright 2019 CHEN Siliang
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License
+```

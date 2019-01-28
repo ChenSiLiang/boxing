@@ -18,11 +18,10 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
-def siteUrl = "https://github.com/Bilibili/boxing"
-def gitUrl = "https://github.com/Bilibili/boxing.git"
+def siteUrl = "https://github.com/chensiliang/boxing"
+def gitUrl = "https://github.com/chensiliang/boxing.git"
 
-group = "com.bilibili"
-version = "1.0.4"
+version = "2.0.0"
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
